@@ -5,7 +5,6 @@ Backend development best practices
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [Translations of this document](#translations-of-this-document)
 - [N Commandments](#n-commandments)
 - [General points on guidelines](#general-points-on-guidelines)
 - [Development environment setup in README.md](#development-environment-setup-in-readmemd)
@@ -53,32 +52,27 @@ Backend development best practices
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-# Translations of this document
-
-These are community-provided translations of this document. If you have comments regarding a particular translation, please approach the translation's maintainer.
-
-- [Turkish](https://github.com/umutphp/backend-best-practices) translation by [umutphp](https://github.com/umutphp)
 
 # N Commandments
 
-1. README.md in the root of the repo is the docs
-2. Single command run
-3. Single command deploy
-4. Repeatable and re-creatable builds
-5. Build artifacts bundle a ["Bill of Materials"](#bill-of-materials)
-6. Use [UTC as the timezone](http://yellerapp.com/posts/2015-01-12-the-worst-server-setup-you-can-make.html) all around
+1. README.md pada root folder repository sebagai dokumen
+2. Single command untuk menjalankan aplikasi
+3. Single command untuk deploy aplikasi
+4. Hasil build harus repeatable and re-creatable
+5. Buat artifacts bundle yang bernama ["Bill of Materials"](#bill-of-materials)
+6. Gunakan [UTC sebagai timezone](http://yellerapp.com/posts/2015-01-12-the-worst-server-setup-you-can-make.html) dimanapun
 
 # General points on guidelines
 
-We do not want to limit ourselves to certain tech stacks or frameworks. Different problems require different solutions, and hence these guidelines are valid for various backend architectures.
+Dokumen ini tidak membatasi atau bergantung pada stack teknologi atau framework tertentu. Masalah yang berbeda memiliki solusi yang berbeda, sehingga guideline ini valid untuk berbagai backend architectures.
 
 # Development environment setup in README.md
 
-Document all the parts of the development/server environment. Strive to use the same setup and versions on all environments, starting from developer laptops, and ending with the actual production environment. This includes the database, application server, proxy server (nginx, Apache, ...), SDK version(s), gems/libraries/modules.
+Dokumentasikan seluruh bagian dari environment development/server yang dibutuhkan. Usahakan untuk menggunakan setup dan versio yang sama pada setiap environment, dimulai dari laptop developer, dan berakhir pada environment pada production. Ini termasuk database, server aplikasi,server proxy (nginx, apache, dll), versi SDK, gems/libraries/modules. 
 
-Automate the setup process as much as possible. For example, [Docker Compose](https://docs.docker.com/compose/) could be used both in production and development to set up a complete environment, where [Dockerfiles](https://docs.docker.com/articles/dockerfile_best-practices/) fetch all parts of the software, and contain the necessary scripting to setup the environment and all the parts of it. Consider using archived copies of the installers, in case upstream packages later become unavailable. A minimum precaution is to keep a SHA-1 checksums of the packages, and to make sure that the checksum matches when the packages are installed.
+Buatlah proses setup menjadi otomatis sebisa mungkin. Sebagai contoh, [Docker Compose](https://docs.docker.com/compose/) bisa digunakan pada lingkungan production dan development untuk melakukan setup seluruh bagian environment, dimana [Dockerfiles](https://docs.docker.com/articles/dockerfile_best-practices/) melakukan fetching seluruh bagian dari software, dan berisi script yang diperlukan untuk men-setup environment serta seluruh bagiannya. Pertimbangkan untuk menggunakan copy-an installer yang telah diarsipkan untuk berjaga-jaga jika paket installer tersebut sudah tidak tersedia lagi. Tindakan paling minimum yang bisa dilakukan adalah dengan menyimpan hasil SHA-1 checksum dari paket tersebut, dan pastikan bahwa paket yang diinstall memiliki hasil checksum yang sama dengan hasil checksum yang digunakan.
 
-Consider storing any relevant parts of the development environment and its dependencies in some persistent storage. If the environment can be built using Docker, one possible way to do this is to use [docker export](http://docs.docker.com/reference/commandline/cli/#export).
+Pertimbangkan untuk menyimpan semua bagian relevan dari development environment dan seluruh dependency-nya pada persistent storage. Jika environment dapat di-build menggunakan docker, salah satu cara untuk mendapatkan ini adalah dengan menggunakan [docker export](http://docs.docker.com/reference/commandline/cli/#export).
 
 # Data persistence
 
