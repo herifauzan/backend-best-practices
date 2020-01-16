@@ -80,56 +80,56 @@ Pertimbangkan untuk menyimpan semua bagian relevan dari development environment 
 
 Independent of the persistence solution your project uses, there are general considerations that you should follow:
 
-* Have backups that are verified to work
-* Have scripts or other tooling for copying persistent data from one env to another, e.g. from prod to staging in order to debug something
-* Have plans in place for rolling out updates to the persistence solution (e.g. database server security updates)
-* Have plans in place for scaling up the persistence solution
-* Have plans or tooling for managing schema changes
-* Have monitoring in place to verify health of the persistence solution
+* Memiliki backup yang sudah terverifikasi dapat berjalan dengan normal
+* Memiliki scripts atau tooling untuk meng-copy persistent data dari satu environment ke environment yang lain
+* Memiliki rencana untuk meluncurkan updates pada persistence solution (e.g. database server security updates)
+* Memiliki rencana untuk scaling up pada persistence solution
+* Memiliki rencana atau tooling untuk me-manage schema changes
+* Memiliki monitoring untuk memverifikasi healt dari persistence solution
 
 ## SaaS, cloud-hosted or self-hosted?
 
-An important choice regarding any solution is where to run it.
+Sebuah keputusan penting mengenai solusi apapun adalah dimana solusi itu akan dijalankan.
 
-* SaaS -- fast to get started, easy to scale up, some infrastructure work required to allow access from everywhere etc.
+* SaaS -- cepat untuk dimulai, mudah untuk scale up, beberapa infrastruktur membutuhkan diperbolehkannya akses dari banyak tempat
 * Self-hosted in the cloud -- allows tuning database more than SaaS and probably cheaper at scale in terms of hosting, but more labor-intensive
 * Self-hosted on own hardware -- able to tweak everything and manage physical security, but most expensive and labor intensive
 
 ## Persistence solutions
 
-This section aims to provide some guidance for selecting the type of persistence solution. The choice always needs to be tailored to the problem and none of these is a silver bullet, however.
+Bagian ini bertujuan untuk memberikan beberapa guidance untuk memilih tipe persistence solution. Pilihannya selalu ditujukan untuk masalah yang ingin diselesaikan dan bagaimanapun tidak ada yang namanya silver buller (Satu solusi untuk semua). 
 
 ### RDBMS
 
-Pick a relational database system such as PostgreSQL when data and transaction integrity is a major concern or when lots of data analysis is required. The [ACID compliance](https://en.wikipedia.org/wiki/ACID), aggregation and transformation functions of the RDBMS will help.
+Pilihlah relational database ketika data dan integrity dari transaksi merupakan hal penting (major concern) atau ketika banyak analisis data diperlukan. Karena [ACID compliance](https://en.wikipedia.org/wiki/ACID), aggregation dan transformation functions dari RDBMS akan sangat membantu.
 
 ### NoSQL
 
-Pick a NoSQL database when you expect to scale horizontally and when you don't require ACID. Pick a system that fits your model.
+Pilihlah NoSQL ketika tidak membutuhkan compliance pada prinsip ACID dan lebih sering untuk melakukan scale horizontally. Pilihlah sistem yang paling cocok dengan model dari data anda. Ada beberapa database NoSQL yang cocok untuk dokumen, ada yang cocok untuk gambar, ada yang cocok untuk data geografis, dan lain-lain. 
 
 #### Document storage
 
-Stores documents that can be easily addressed and searched for by content or by inclusion in a collection. This is made possible because the database understands the storage format. Use for just that: storing large numbers of structured documents. Notable examples:
+Menyimpan dokumen menjadi lebih mudah ditempatkan dan dicari berdasarkan konten atau berdasarkan kesamaan pada koleksi. Tipe NoSQL ini dapat melakukannya karena database memahami format storage. Digunakan hanya untuk itu, menyimpan structured documents berjumlah banyak. Beberapa contoh:
 
 * CouchDB
 * ElasticSearch
 
-> Note that since 9.4, PostgreSQL can also be used to store JSON natively.
+> Catatan sejak versi 9.4, PostgreSQL juga dapat menyimpan JSON secara native.
 
 #### Key-value store
 
-Stores values, or sometimes groups of key-value pairs, accessible by key. Considers the values to be simply blobs, so does not provide the query capabilities of document stores. Scalable to immense sizes. Notable examples:
+Menyimpan values, atau terkadang kumpulan dari pasangan key-value, dapat diakses berdasarkan key. Pertimbangkan value seperti blobs, maka query tidak akan mampu digunakan oleh document store. Scalable untuk ukuran yang sangat besar. Beberapa contoh:
 
 * Cassandra
 * Redis
 
 #### Graph database
 
-General graph databases store nodes and edges of a graph, providing index-free lookups of the neighbors of any node. For applications where graph-like queries like shortest path or diameter are crucial. Specialized graph databases also exist for storing e.g. [RDF triples](https://en.wikipedia.org/wiki/Resource_Description_Framework).
+Secara umum graph databases menyimpan node dan edge dari sebuah graf, menyediakan index-free lookups untuk melihat tetangga dari node manapun. Untuk penggunaan graf-query seperti shortest path atau diameter adalah sangat penting. Specialized graph databases juga hadir untuk penyimpanan e.g. [RDF triples](https://en.wikipedia.org/wiki/Resource_Description_Framework).
 
 # Environments
 
-This section describes the environments you should have, at a minimum. It might sound like a lot, [but there is a purpose for each one](http://futurice.com/blog/five-environments-you-cannot-develop-without).
+Bagian ini mendeskripsikan environment apa saja minimal yang harus dimiliki. Mungkin akan terlihat seolah-olah banyak [tetapi ada tujuan dari masing-masingnya](http://futurice.com/blog/five-environments-you-cannot-develop-without).
 
 - [Local development](#local-development-environment)
 - [Continuous integration](#continuous-integration-environment)
@@ -139,60 +139,60 @@ This section describes the environments you should have, at a minimum. It might 
 
 ## Local development environment
 
-This is your local development environment. You probably should not have a shared external development environment. Instead, you should work to make it possible to run the entire system locally, by stubbing or mocking third-party services as needed.
+Ini adalah lingkungan local yang dimiliki developer. Lingkungan ini seharusnya tidak boleh mengakses environment luar manapun. Semua yang ada harus berjalan pada sistem secara lokal, dengan stubbing, mocking thirdpary services sebagaimana dibutuhkan.
 
 ## Continuous integration environment
 
-CI is (among other things) for making sure that your software builds and automated tests pass after every change.
+CI adalah (antara lain) untuk menjamin bahwa software yang berhasil di-build dan lolos ketika di-test secara otomatis untuk setiap perubahan.
 
 ## Testing environment
 
-This is a shared environment where code is deployed to as often as possible, preferably every time code is committed to the mainline branch. It can be broken from time to time, especially in the active development phase. It is an important canary environment and is as similar to production as possible. Any external integrations are set up to use staging-level versions of other services.
+Ini adalah shared environment dimana kode di-deploy sesering mungkin, lebih bagus jika setiap ada commit ke branch utama. Lingkungan ini dapat rusak dari waktu ke waktu, terutama ketika masa development. Ini merupakan environment yang penting dan sebisa mungkin agar sama dengan production. Segala integrasi eksternal agar diatur menggunakan staging level version dari service lainnya. 
 
 ## Staging environment
 
-Staging is set up exactly like production. No changes to the production environment happen before having been rehearsed here first. Any mysterious production issues can be debugged here.
+Staging harus bisa di-setup persis seratus persen sama dengan production. Tidak boleh ada perubahan di production jika tidak melewati staging terlebih dahulu. Seluruh issue aneh yang hanya terjadi di-production dapat di-debug di sini.
 
 ## Production environment
 
-The big iron. Logged, monitored, cleaned up periodically, squared away and secured.
+Sebuah brankas besar. Logged, monitored, cleaned up periodically, squared away and secured.
 
 # Bill of Materials
 
-This document must be included in every build artifact and shall contain the following:
+Dokumen ini harus dimasukkan pada setiap build artifact dan harus mengandung keterangan berikut:
 
-1. What version(s) of an SDK and critical tools were used to produce it
-1. Which dependencies have been included
-1. A globally unique revision number of the build (i.e. a git SHA-1 hash)
-1. The environment and variables used when building the package
-1. A list of failed tests or checks
+1. Versi berapa dari SDK dan Tools apa yang diperlukan untuk menghasilkannya
+1. Dependency mana yang sudah termasuk
+1. Nomor revisi global yang unik pada software (i.e. a git SHA-1 hash)
+1. Environment dan variable yang digunakan ketika mem-build package
+1. Daftar test atau cek yang gagal
 
 
 # Security
 
-Be aware of possible security threats and problems. You should at least be familiar with the [OWASP Top 10 vulnerabilities](https://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project), and you should of monitor vulnerabilities in any third party software you use.
+Berhati-hatilah terhadap kemungkinan security threats dan masalah. Minimal harus familiar dengan  [OWASP Top 10 vulnerabilities](https://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project), dan harus dapat memonitor vulnerabilities dari seluruh third party software yang digunakan.
 
-Good generic security guidelines would be:
+Beberapa panduan security yang umum seperti:
 
 ## Docker
 
-**Using Docker will not make your service more secure.** Generally, you should consider at least following things if using Docker:
+**Menggunakan Docker tidak akan membuat service lebih aman.** Secara umum, harus dipertimbangkan setidaknya beberapa hal ketika menggunakan Docker:
 
-- Don't run any untrusted binaries inside Docker containers
-- Create unprivileged users inside Docker containers and run binaries using unprivileged user instead of root whenever possible
-- Periodically rebuild and redeploy your containers with updated libraries and dependencies
-- Periodically update (or rebuild) your Docker hosts with latest security updates
-- Multiple containers running on same host will by default have some level of access to other containers and the host itself. Properly secure all hosts, and run containers with a minimum set of capabilities, for example preventing network access if they don't need it.
+- Jangan jalankan untrusted binaries apapun di dalam Docker containers
+- Buatlah unprivileged user di dalam Docker containers dan jalankan binaries menggunakan unprivileged user daripada menggunakan root kapanpun
+- Secara periodik build ulang dan deploy ulang container dengan updated libraries dan dependencies
+- Secara periodik update (atau rebuild) Docker hosts dengan latest security updates
+- Banyak containers berjalan pada host yang sama by default akan memiliki beberapa level akses ke container lain dan hostnya itu sendiri. Amankan seluruh host dan jalankan container dengan akses capability minimum, sebagai contoh mencegah network access jika tidak dibutuhkan.
 
 ## Credentials
 
-Never send credentials unencrypted over public network. Always use encryption (such as HTTPS, SSL, etc.).
+Jangan pernah mengirim kredensial tanpa terenkripsi melalui network public. Selalu gunakan enkripsi (such as HTTPS, SSL, etc.).
 
 ## Secrets
 
-Never store secrets (passwords, keys, etc.) in the sources in version control! It is very easy to forget they are there and the project source tends to end up in many places (developer machines, development test servers, etc) which unnecessarily increases the risk of an important secret being compromised. Also, version control has the nasty feature of overwriting file permissions, so even if you secure your config file permissions, the next time you check out the source, the permissions would be overwritten to the default public-readable.
+Jangan pernah menyimpan secrets (passwords, keys, etc.) pada source code di version control! Akan sangat mudah terlupakan jika semua secrets ada di sana dan ujungnya seluruh secret bisa diakses di banyak tempat (developer machines, development test servers, etc) yang tidak sengaja menambah resiko rahasia penting diabaikan. Juga, version control memiliki fitur berbahaya untuk melakukan overwriting file permissions, sehingga jika config file permission sudah diatur untuk diamankan, pada check out berikutnya permission akan otomatis di-overwrite menjadi default public readable.
 
-Probably the easiest way to handle secrets is to put them in a separate file on the servers that need them, and to be ignored by version control. You can keep e.g. a `.sample` file in the version control, with fake values to illustrate what should go there in the real file. In some cases, it is not easy to include a separate configuration file from the main configuration. If this happens, consider using environment variables, or writing the config file from a version-controlled template on deployment.
+Cara paling mungkin termudah untuk menangani hal ini adalah dengan menyimpannya pada file berbeda pada server yang memang membutuhkannya, dan dengan di-ignore oleh version control. Bisa juga dengan menyimpan `.sample` file di version control, dengan fake values untuk menjelaskan apa yang harus diubah pada konfigurasi tersebut. Pada beberapa kasus, tidak mudah memisahkan configuration file dari main configuration. Jika itu terjadi, pertimbangkan menggunakan environment variables, atau tulis config file dari template dari version control pada saat deployment.
 
 ## Login Throttling
 
