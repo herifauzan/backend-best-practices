@@ -229,7 +229,7 @@ Audit log bisa jadi merupakan bagian dari normal application log, tetapi yang di
 
 ## Suspicious Action Throttling and/or blocking
 
-This can be seen as a generalization of the Login Throttling, this time introducing similar mechanics for arbitrary actions that are deemed "suspicious" within the context of the application. For example, an ERP system which allows normal users access to a substantial amount of information, but expects users to be concerned only with a small subset of that information, may limit attempts to access larger than expected datasets too quickly. E.g. prevent users from downloading list of all customers, if users are supposed to work on one or two customers at a time. Note that this is different from limiting access completely—users are still allowed to retrieve information about any customer, just not all of them at once. Depending on the system, throttling might not be enough—e.g. when one invokes an action on all resources with a single request. Then blocking might be required. Note the difference between making 1000 requests in 10 seconds to retrieve full customer information, one customer at a time, and making a single request to retrieve that information at once.
+Ini dapat dilihat sebagai generalisasi dari Login Throttling, this time introducing similar mechanics for arbitrary actions that are deemed "suspicious" within the context of the application. For example, an ERP system which allows normal users access to a substantial amount of information, but expects users to be concerned only with a small subset of that information, may limit attempts to access larger than expected datasets too quickly. E.g. prevent users from downloading list of all customers, if users are supposed to work on one or two customers at a time. Note that this is different from limiting access completely—users are still allowed to retrieve information about any customer, just not all of them at once. Depending on the system, throttling might not be enough—e.g. when one invokes an action on all resources with a single request. Then blocking might be required. Note the difference between making 1000 requests in 10 seconds to retrieve full customer information, one customer at a time, and making a single request to retrieve that information at once.
 
 What is suspicious here depends strongly on the expected use of the application. E.g. in one system, deleting 10000 records might be completely legitimate action, but not so in an another one.
 
@@ -442,11 +442,11 @@ The status pages may need proper authorization in place, especially in case they
 
 # Checklists
 
-To avoid forgetting the most important things, here are some handy checklists for your current or upcoming projects.
+Untuk menghindari melupakan hal-hal yang penting, berikut ini adalah beberapa checklist yang bisa digunakan sebagai checklist.
 
 ## Responsibility checklist
 
-In bigger projects, especially when multiple parties are involved, it is crucial to keep track of all different aspects and its responsibilities. The following table illustrates how a go-live checklist for releasing a website could look like:
+Pada projek yang lebih besar, terutama ketika multiple parties terlibat, sangat penting untuk selalu menjaga track dari seluruh role yang berbeda dan tanggungjawabnya. Tabel di bawah ini mengilustrasikan bagaimana list untuk sampai go-live untuk merilis sebuah website: 
 
 | Aspect    | Task                              | Responsible person / party | Deadline     | Status            |
 |---        |---                                |---                         |---           |---                |
@@ -467,7 +467,7 @@ In bigger projects, especially when multiple parties are involved, it is crucial
 
 ## Release checklist
 
-When you are ready to release, remember to check off everything on your release checklist! The resulting peace of mind, repeatability and dependability is a great boon.
+Ketika sudah siap untuk rilis, ingatlah untuk mengecek semua pada rilis checklist! Hasil yang memuaskan, repeatability and dependability adalah bonus.
 
 You *do* have one, right? If you don't, here is a good generic starting point for you:
 
@@ -497,17 +497,17 @@ You *do* have one, right? If you don't, here is a good generic starting point fo
 
 # General questions to consider
 
-* What is the expected/required life-span of the project?
-* Is the project one-off, or will there be continuous development?
-* What is the release cycle for a version of the service?
-* What environments (dev, test, staging, prod, ...) are going to be set up?
-* How will downtime of the production service impact the value of the service?
-* How mature is the technology? Is major changes that break backward compatibility to be expected?
+* Bagaimana/Apa life-span yang diekspektasikan/dibutuhkan dari projek? 
+* Apakah projek merupakan one-off (sekali jadi dan selesai), atau akan ada continous development?
+* Apa siklus rilis untuk versi dari servis?
+* Apa environments (dev, test, staging, prod, ...) yang ingin di-setup?
+* Bagaimana downtime dari production service akan mempengaruhi nilai dari service?
+* Seberapa mature teknologi yang digunakan? Apakah major changes merusak backward compatibility diekspektasi?
 
 # Generally proven useful tools
 
-* [HTTPie](https://github.com/jakubroztocil/httpie) is a great tool for testing APIs on the command line. It's simple to pass in custom headers and cookies, and it even has session support.
-* [jq](http://stedolan.github.io/jq/) is a CLI JSON processor. Massage JSON data coming in from cURL (or of course HTTPie!) at will. Another great tool for API testing or exploration.
+* [HTTPie](https://github.com/jakubroztocil/httpie) adalah tool yang bagus digunakan untuk testing API pada command line. Sangat mudah untuk memasukkan custom headers dan cookies, bahkan di-support oleh session.
+* [jq](http://stedolan.github.io/jq/) adalah CLI untuk JSON processor. Massage JSON data masuk dari cURL (atau HTTPie!) kapanpun.
 
 # License
 
