@@ -196,26 +196,26 @@ Cara paling mungkin termudah untuk menangani hal ini adalah dengan menyimpannya 
 
 ## Login Throttling
 
-Place limits on the amount of login attempts allowed per client per unit of time. Lock a user account for specific time after a given number of failed attempts (e.g. lock for 5 minutes after 20 failed login attempts).
-The aim of these measures is make online brute-force attacks against usernames/passwords infeasible.
+Atur batas maksimum percobaan login yang diperbolehkan per-klien per satuan waktu. Lock akun user yang untuk waktu yang spesifik setelah gagal beberapa kali (misal. lock selama 5 menit setelah 20 kali gagal login).
+Tujuan dari hal ini adalah untuk membuat brute-force attack menggunakan username dan password tidak dapat dilakukan.
 
 ## User Password Storage
 
-> Never EVER store passwords in plaintext!
+> Jangan pernah menyimpan password dalam plaintext!
 
-Never store passwords in reversible encrypted form, unless absolutely required by the application / system. Here is a good article about what and what not to do: https://crackstation.net/hashing-security.htm
+Jangan menyimpan password pada reversible encrypted form, kecuali sangat diperlukan oleh aplikasi/sistem. Ini adalah artikel yang bagus tentang apa yang boleh dan tidak dilakukan: https://crackstation.net/hashing-security.htm
 
-If you do need to be able to obtain plaintext passwords from the database, here are some suggestions to follow.
+Jika memang dibutuhkan untuk mendapatkan plaintext password dari database, ada beberapa saran sebagai berikut.
 
-If passwords won't be converted back to plaintext often (e.g. special procedure is required), keep decryption keys away from the application that accesses the database regularly.
+Jika password tidak akan sering di-konversi kembali ke plaintext (misal. procedure khusus dibutuhkan), simpan decryption key jauh-jauh dari aplikasi yang mengakses database secara regular.
 
-If passwords still need to be regularly decrypted, separate the decryption functionality from the main application as much as possible—e.g. a separate server accepts requests to decrypt a password, but enforces a higher level of control, like throttling, authorization, etc.
+Jika password masih butuh di-decrypt secara regular, pisahkan fungsi decrypt dari main application sebisa mungkin— misal. server terpisah menerima requests untuk men-decrypt password, tapi dipaksa harus menggunakan high level control, seperti throttling, authorization, dll.
 
-Whenever possible (it should be in a great majority of cases), store passwords using a good one-way hash with a good random salt. And, no, SHA-1 is not a good choice for a hashing function in this context. Hash functions that are designed with passwords in mind are deliberately slower, which makes offline brute-force attacks more time consuming, hence less feasible. See this post for more details: http://security.stackexchange.com/questions/211/how-to-securely-hash-passwords/31846#31846
+Kapanpun memungkinkan (pada kasus yang umum mayoritas terjadi), simpan password menggunakan one-way hash yang bagus dengan sebuah random salt. SHA-1 bukanlah pilihan yang bagus untuk hashing function pada konteks ini. Hash functions yang didesign dengan password dapat dipertimbangkan sangat lambat, sehingga membuat offline brute-force attack menjadi sangat memakan waktu, akibatnya semakin tidak mungkin dilakukan. Lihat post ini untuk lebih detail: http://security.stackexchange.com/questions/211/how-to-securely-hash-passwords/31846#31846
 
 ## Audit Log
 
-For applications handling sensitive data, especially where certain users are allowed a relatively wide access or control, it's good to maintain some kind of audit logging—storing a sequence of actions / events that took place in the system, together with the event/source originator (user, automation job, etc). This can be, e.g:
+Untuk aplikasi yang meng-handle data sensitif, secara khusus jika memiliki beberapa user yang memiliki hak akses dan kontrol yang luas, langkah yang tepat untuk membuat audit loggin-storing dari sekuens aksi atau event yang terjadi pada sistem, bersama dengan sumber/event yang menjadi sumber hal tersebut (user, automation job, etc). Bisa seperti berikut, misal:
 
     2012-09-13 03:00:05 Job "daily_job" performed action "delete old items".
     2012-09-13 12:47:23 User "admin_user" performed action "delete item 123".
@@ -223,9 +223,9 @@ For applications handling sensitive data, especially where certain users are all
     2012-09-13 13:02:11 User "sneaky_user" performed action "view confidential page 567".
     ...
 
-The log may be a simple text file or stored in a database. At least these three items are good to have: an exact timestamp, the action/event originator (who did this), and the actual action/event (what was done). The exact actions to be logged depend on what is important for the application itself, of course.
+Mungkin log hanyalah berupa text sederhana yang tersimpan di databases. Setidaknya 3 hal ini sangat bagus untuk dimiliki: timestamp kejadian, sumber action/event, kejadian dari event/action. Event/action yang dicatat tentu sangat bergantung pada seberapa penting hal itu untuk dicatat tentunya
 
-The audit log may be a part of the normal application log, but the emphasis here is on logging who did what and not only that a certain action was performed. If possible, the audit log should be made tamper-proof, e.g. only be accessible by a dedicated logging process or user and not directly by the application.
+Audit log bisa jadi merupakan bagian dari normal application log, tetapi yang ditekankan disini adalah mencatat siapa melakukan apa, bukan hanya sekedar apa yang terjadi. Jika memungkinkan, audit log harus dibuat tamper-proof, misal. hanya dapat diakses oleh proses atau user yang memiliki akses khusus dan bukan langsung dari aplikasi. 
 
 ## Suspicious Action Throttling and/or blocking
 
